@@ -60,7 +60,7 @@ gm check --json
 Identity is auto-detected from:
 1. `--identity` flag
 2. `GM_IDENTITY` environment variable
-3. Current tmux session name
+3. Current tmux window name
 4. Hostname
 
 Override identity for any command:

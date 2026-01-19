@@ -9,7 +9,7 @@ import (
 // GetIdentity returns the current identity based on priority:
 // 1. Explicit identity (from --identity flag)
 // 2. GM_IDENTITY environment variable
-// 3. Tmux session name (if inside tmux)
+// 3. Tmux window name (if inside tmux)
 // 4. Hostname (fallback)
 func GetIdentity(explicit string) (string, error) {
 	if explicit != "" {
@@ -21,8 +21,8 @@ func GetIdentity(explicit string) (string, error) {
 	}
 
 	if IsInsideTmux() {
-		if session, err := GetTmuxSession(); err == nil && session != "" {
-			return session, nil
+		if window, err := GetTmuxWindow(); err == nil && window != "" {
+			return window, nil
 		}
 	}
 
@@ -38,9 +38,9 @@ func IsInsideTmux() bool {
 	return os.Getenv("TMUX") != ""
 }
 
-// GetTmuxSession returns the current tmux session name
-func GetTmuxSession() (string, error) {
-	cmd := exec.Command("tmux", "display-message", "-p", "#S")
+// GetTmuxWindow returns the current tmux window name
+func GetTmuxWindow() (string, error) {
+	cmd := exec.Command("tmux", "display-message", "-p", "#W")
 	output, err := cmd.Output()
 	if err != nil {
 		return "", err
