@@ -34,12 +34,15 @@ type BeadsIssue struct {
 	ID          string   `json:"id"`
 	Title       string   `json:"title"`
 	Description string   `json:"description"`
-	Type        string   `json:"type"`
+	Type        string   `json:"issue_type"`
 	Status      string   `json:"status"`
 	Assignee    string   `json:"assignee"`
+	Owner       string   `json:"owner"`
 	Priority    int      `json:"priority"`
 	Labels      []string `json:"labels"`
 	CreatedAt   string   `json:"created_at"`
+	CreatedBy   string   `json:"created_by"`
+	UpdatedAt   string   `json:"updated_at"`
 }
 
 // ParseBeadsIssue converts a BeadsIssue to a Message

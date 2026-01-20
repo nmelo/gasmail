@@ -66,12 +66,17 @@ func (m *Mailbox) Get(id string) (*Message, error) {
 		return nil, fmt.Errorf("bd show failed: %w", err)
 	}
 
-	var issue BeadsIssue
-	if err := json.Unmarshal(output, &issue); err != nil {
+	// bd show returns an array
+	var issues []BeadsIssue
+	if err := json.Unmarshal(output, &issues); err != nil {
 		return nil, fmt.Errorf("failed to parse message: %w", err)
 	}
 
-	return ParseBeadsIssue(&issue), nil
+	if len(issues) == 0 {
+		return nil, fmt.Errorf("message not found: %s", id)
+	}
+
+	return ParseBeadsIssue(&issues[0]), nil
 }
 
 // MarkRead marks a message as read by adding the "read" label
