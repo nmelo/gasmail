@@ -13,7 +13,7 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - -s -w
+      - -s -w -X main.version={{.Version}}
 
 archives:
   - format: tar.gz
@@ -25,3 +25,15 @@ checksum:
 release:
   draft: false
   prerelease: auto
+
+brews:
+  - repository:
+      owner: nmelo
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/nmelo/gasmail
+    description: Persistent agent-to-agent messaging using beads
+    license: MIT
+    install: |
+      bin.install "gm"
